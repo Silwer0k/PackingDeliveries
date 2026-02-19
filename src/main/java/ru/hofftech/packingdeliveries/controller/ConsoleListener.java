@@ -8,18 +8,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.hofftech.packingdeliveries.model.CargoPackage;
+import ru.hofftech.packingdeliveries.service.OneByOnePackager;
+import ru.hofftech.packingdeliveries.service.PackageReader;
 
 public class ConsoleListener {
     private static final Logger log = LoggerFactory.getLogger(ConsoleListener.class);
     private static final Map<Pattern, Consumer<Matcher>> commandHandlers = new HashMap<>();
+    private static final OneByOnePackager  packerController = new OneByOnePackager();
+    private static final PackageReader packageReader = new PackageReader();
 
     static {
         commandHandlers.put(Pattern.compile("^exit$"), matcher -> {
-            log.info("Exiting application");
+            log.info("Выход из приложения");
             System.exit(0);
         });
         commandHandlers.put(Pattern.compile("^import (.+\\.txt)$"), matcher -> {
-            log.info("Importing file: {}", matcher.group(1));
+            String packagesFilename = matcher.group(1);
+            for (CargoPackage cargoPackage: packageReader.readFromFile(packagesFilename)){
+                packerController.addPackage(cargoPackage);
+            }
+        });
+        commandHandlers.put(Pattern.compile("^doPacking$"), matcher -> {
+            packerController.doPacking();
+            packerController.showPackingResults();
+            log.info("Выход из приложения");
+            System.exit(0);
         });
     }
 
@@ -37,7 +51,7 @@ public class ConsoleListener {
             }
         }
         if (!matched) {
-            log.error("Unknown command: {}", command);
+            log.error("Неизвестная команда: {}", command);
         }
     }
 
