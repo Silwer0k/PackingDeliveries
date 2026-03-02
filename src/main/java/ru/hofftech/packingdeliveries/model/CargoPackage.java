@@ -8,10 +8,8 @@ public class CargoPackage {
     private final char marker;
     private final int width;
     private final int depth;
-
-    public char getMarker() {
-        return marker;
-    }
+    private final int weight;
+    private final char[][] packageMatrix;
 
     public int getWidth() {
         return width;
@@ -21,22 +19,32 @@ public class CargoPackage {
         return depth;
     }
 
+    public int getWeight() {
+        return weight;
+    }
+
     public CargoPackage(char packageMarker, int packageWidth, int packageDepth){
         marker = packageMarker;
         width = packageWidth;
         depth = packageDepth;
+        weight = Character.getNumericValue(marker);
 
+        int curWeight = 0;
+        packageMatrix = new char[depth][width];
+        for (int row = depth - 1; row >= 0; row--){
+            for (int col = 0; col < width; col++){
+                curWeight++;
+                packageMatrix[row][col] = (curWeight <= weight) ? marker : Truck.emptySpaceMarker;
+            }
+        }
         log.info("Создан объект посылки с параметрами: Marker = {}, Width = {}, Depth = {}", marker, width, depth);
     }
 
+    public char[] packageMatrixRow(int row){
+        return packageMatrix[row];
+    }
+
     public String toString(){
-        String str = "";
-        for (int i = 0; i < depth; i++){
-            for (int j = 0; j < width; j++){
-                str += marker;
-            }
-            str += "\n";
-        }
-        return str;
+        return String.format("%c:%d,%d", marker, width, depth);
     }
 }

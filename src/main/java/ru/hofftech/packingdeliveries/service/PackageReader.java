@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class PackageReader {
     private static final Logger log = LoggerFactory.getLogger(PackageReader.class);
-    private static final String packagesRegex = "1\\r\\n|22\\r\\n|333\\r\\n|4444\\r\\n|5555\\r\\n|666\\r\\n666\\r\\n|777\\r\\n7777\\r\\n|8888\\r\\n8888\\r\\n";
+    private static final String packagesRegex = "1($|\\r\\n)|22($|\\r\\n)|333($|\\r\\n)|4444($|\\r\\n)|55555($|\\r\\n)|666\\r\\n666($|\\r\\n)|777\\r\\n7777($|\\r\\n)|8888\\r\\n8888($|\\r\\n)|999\\r\\n999\\r\\n999($|\\r\\n)";
 
     public ArrayList<CargoPackage> readFromFile(String fileName){
         ArrayList<CargoPackage> parsedPackages = new ArrayList<>();
@@ -30,7 +30,7 @@ public class PackageReader {
                 char packageMarker = packageString.charAt(0);
                 String[] lines = packageString.split("\\r\\n");
                 short depth = (short)lines.length;
-                short width = (short)lines[0].length();
+                short width = (depth > 1) ? (short)lines[1].length() : (short)lines[0].length();
                 parsedPackages.add(new CargoPackage(packageMarker, width, depth));
             }
         }
