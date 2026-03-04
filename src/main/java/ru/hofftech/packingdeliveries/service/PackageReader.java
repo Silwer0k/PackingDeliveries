@@ -29,8 +29,8 @@ public class PackageReader {
                 String packageString = matcher.group();
                 char packageMarker = packageString.charAt(0);
                 String[] lines = packageString.split("\\r\\n");
-                short depth = (short)lines.length;
-                short width = (depth > 1) ? (short)lines[1].length() : (short)lines[0].length();
+                int depth = lines.length;
+                int width = (depth > 1) ? lines[1].length() : lines[0].length();
                 parsedPackages.add(new CargoPackage(packageMarker, width, depth));
             }
         }
