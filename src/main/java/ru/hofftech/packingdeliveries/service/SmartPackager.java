@@ -10,7 +10,7 @@ public class SmartPackager extends Packager {
     @Override
     public void doPacking(ArrayList<CargoPackage> packagesToPack) {
         ArrayList<CargoPackage> sortedPackages = new ArrayList<>(packagesToPack);
-        sortedPackages.sort(Comparator.comparingInt(CargoPackage::getWeight).reversed());
+        sortedPackages.sort(Comparator.comparing(CargoPackage::getMarker).reversed());
 
         log.info("Начало упаковки в грузовики");
         for (CargoPackage cargo : sortedPackages) {

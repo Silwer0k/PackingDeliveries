@@ -8,8 +8,11 @@ public class CargoPackage {
     private final char marker;
     private final int width;
     private final int depth;
-    private final int weight;
     private final char[][] packageMatrix;
+
+    public char getMarker() {
+        return marker;
+    }
 
     public int getWidth() {
         return width;
@@ -19,15 +22,11 @@ public class CargoPackage {
         return depth;
     }
 
-    public int getWeight() {
-        return weight;
-    }
-
     public CargoPackage(char packageMarker, int packageWidth, int packageDepth) {
         marker = packageMarker;
         width = packageWidth;
         depth = packageDepth;
-        weight = Character.getNumericValue(marker);
+        int weight = Character.getNumericValue(marker);
 
         int curWeight = 0;
         packageMatrix = new char[depth][width];
