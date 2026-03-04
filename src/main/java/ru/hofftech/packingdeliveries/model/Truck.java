@@ -1,14 +1,15 @@
 package ru.hofftech.packingdeliveries.model;
 
-import com.mifmif.common.regex.Generex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Random;
 
 public class Truck {
     public static final char emptySpaceMarker = ' ';
     private static final char borderMarker = '+';
-    private static final String numberRegex = "[A-Z]\\d\\d\\d[A-Z][A-Z]";
     private static final Logger log = LoggerFactory.getLogger(Truck.class);
+    private static final Random randomizer = new Random();
     private final short width = 6;
     private final short depth = 6;
     private final char[][] cargoSpace;
@@ -28,7 +29,7 @@ public class Truck {
 
     public Truck(){
         cargoSpace = new char[width][depth];
-        number = new Generex(numberRegex).random();
+        number = String.valueOf(randomizer.nextInt(100));
         log.info("Создан объект грузовика {} с параметрами Width: {} Depth: {}", number, width, depth);
         doEmpty();
     }
