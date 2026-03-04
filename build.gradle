@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.diffplug.spotless' version "8.3.0"
 }
 
 group = 'ru.hofftech'
@@ -28,4 +29,13 @@ jar {
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from(configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) })
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+        targetExclude("build/**")
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }

@@ -1,9 +1,8 @@
 package ru.hofftech.packingdeliveries.model;
 
+import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Random;
 
 public class Truck {
     public static final char emptySpaceMarker = ' ';
@@ -27,7 +26,7 @@ public class Truck {
         return depth;
     }
 
-    public Truck(){
+    public Truck() {
         cargoSpace = new char[width][depth];
         number = String.valueOf(randomizer.nextInt(100));
         log.info("Создан объект грузовика {} с параметрами Width: {} Depth: {}", number, width, depth);
@@ -35,9 +34,11 @@ public class Truck {
     }
 
     public boolean tryPlacePackage(CargoPackage cargoPackage) {
-        for (int row = depth - 1; row >= 0; row--){
-            for (int col = 0; col < width; col++){
-                if (cargoSpace[row][col] == emptySpaceMarker && checkCargoSpaceForPackage(cargoPackage, row, col) && checkSupportForCargo(cargoPackage, row, col)){
+        for (int row = depth - 1; row >= 0; row--) {
+            for (int col = 0; col < width; col++) {
+                if (cargoSpace[row][col] == emptySpaceMarker
+                        && checkCargoSpaceForPackage(cargoPackage, row, col)
+                        && checkSupportForCargo(cargoPackage, row, col)) {
                     placePackage(cargoPackage, row, col);
                     return true;
                 }
@@ -46,17 +47,22 @@ public class Truck {
         return false;
     }
 
-    public void placePackage(CargoPackage cargoPackage, int rowPos, int colPos){
-        for (int packageRow = 0; packageRow < cargoPackage.getDepth(); packageRow++){
-            System.arraycopy(cargoPackage.packageMatrixRow(packageRow), 0, cargoSpace[rowPos - (cargoPackage.getDepth() - 1) + packageRow], colPos, cargoPackage.getWidth());
+    public void placePackage(CargoPackage cargoPackage, int rowPos, int colPos) {
+        for (int packageRow = 0; packageRow < cargoPackage.getDepth(); packageRow++) {
+            System.arraycopy(
+                    cargoPackage.packageMatrixRow(packageRow),
+                    0,
+                    cargoSpace[rowPos - (cargoPackage.getDepth() - 1) + packageRow],
+                    colPos,
+                    cargoPackage.getWidth());
         }
         log.info("Посылка {} размещена на позицию {},{}", cargoPackage.toString(), rowPos, colPos);
     }
 
-    public String toString(){
+    public String toString() {
         StringBuilder str = new StringBuilder();
-        for (int row = 0; row <= depth; row++){
-            for (int column = -1; column <= width ; column++){
+        for (int row = 0; row <= depth; row++) {
+            for (int column = -1; column <= width; column++) {
                 str.append(isBorderCoords(row, column) ? borderMarker : cargoSpace[row][column]);
             }
             str.append('\n');
@@ -64,35 +70,39 @@ public class Truck {
         return str.toString();
     }
 
-    private boolean isBorderCoords(int row, int column){
+    private boolean isBorderCoords(int row, int column) {
         return ((row == depth) || (column == -1) || (column == width));
     }
 
-    private void doEmpty(){
-        for (int row = 0; row < depth; row++){
-            for (int col = 0 ; col < width; col++){
+    private void doEmpty() {
+        for (int row = 0; row < depth; row++) {
+            for (int col = 0; col < width; col++) {
                 cargoSpace[row][col] = emptySpaceMarker;
             }
         }
         log.info("Разгрузили грузовик");
     }
 
-    private boolean checkCargoSpaceForPackage(CargoPackage cargoPackage, int rowPos, int colPos){
-        if ((rowPos - (cargoPackage.getDepth() - 1) < 0) || (colPos + cargoPackage.getWidth() - 1 >= width)) return false;
+    private boolean checkCargoSpaceForPackage(CargoPackage cargoPackage, int rowPos, int colPos) {
+        if ((rowPos - (cargoPackage.getDepth() - 1) < 0) || (colPos + cargoPackage.getWidth() - 1 >= width)) {
+            return false;
+        }
 
-        for (int row = 0; row < cargoPackage.getDepth(); row++){
-            for (int col = 0; col < cargoPackage.getWidth(); col++){
+        for (int row = 0; row < cargoPackage.getDepth(); row++) {
+            for (int col = 0; col < cargoPackage.getWidth(); col++) {
                 if (cargoSpace[rowPos - row][colPos + col] != emptySpaceMarker) return false;
             }
         }
         return true;
     }
 
-    private boolean checkSupportForCargo(CargoPackage cargoPackage, int rowPos, int colPos){
-        if (rowPos + 1 == depth) return true;
+    private boolean checkSupportForCargo(CargoPackage cargoPackage, int rowPos, int colPos) {
+        if (rowPos + 1 == depth) {
+            return true;
+        }
 
         int supports = 0;
-        for (int col = 0; col < cargoPackage.getWidth(); col++){
+        for (int col = 0; col < cargoPackage.getWidth(); col++) {
             supports += (cargoSpace[rowPos + 1][colPos + col] == emptySpaceMarker) ? 0 : 1;
         }
 

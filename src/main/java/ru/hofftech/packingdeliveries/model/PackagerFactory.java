@@ -5,7 +5,7 @@ import ru.hofftech.packingdeliveries.service.Packager;
 import ru.hofftech.packingdeliveries.service.SmartPackager;
 
 public class PackagerFactory {
-    public Packager construct(String packagingMethod) throws IllegalArgumentException{
+    public Packager construct(String packagingMethod) throws IllegalArgumentException {
         PackagingMethod method = PackagingMethod.valueOf(packagingMethod.toUpperCase());
         return switch (method) {
             case SMART -> new SmartPackager();

@@ -23,7 +23,7 @@ public class CargoPackage {
         return weight;
     }
 
-    public CargoPackage(char packageMarker, int packageWidth, int packageDepth){
+    public CargoPackage(char packageMarker, int packageWidth, int packageDepth) {
         marker = packageMarker;
         width = packageWidth;
         depth = packageDepth;
@@ -31,8 +31,8 @@ public class CargoPackage {
 
         int curWeight = 0;
         packageMatrix = new char[depth][width];
-        for (int row = depth - 1; row >= 0; row--){
-            for (int col = 0; col < width; col++){
+        for (int row = depth - 1; row >= 0; row--) {
+            for (int col = 0; col < width; col++) {
                 curWeight++;
                 packageMatrix[row][col] = (curWeight <= weight) ? marker : Truck.emptySpaceMarker;
             }
@@ -40,11 +40,11 @@ public class CargoPackage {
         log.info("Создан объект посылки с параметрами: Marker = {}, Width = {}, Depth = {}", marker, width, depth);
     }
 
-    public char[] packageMatrixRow(int row){
+    public char[] packageMatrixRow(int row) {
         return packageMatrix[row];
     }
 
-    public String toString(){
+    public String toString() {
         return String.format("%c:%d,%d", marker, width, depth);
     }
 }
