@@ -11,7 +11,7 @@ public class OneByOnePackager extends Packager {
         for (CargoPackage cargo : packages) {
             Truck newTruck = new Truck();
             trucks.add(newTruck);
-            newTruck.placePackage(cargo, newTruck.getDepth() - 1, 0);
+            newTruck.tryPlacePackage(cargo);
             log.info("Упаковали посылки в грузовик {}", newTruck.getNumber());
         }
         log.info("Окончание упаковки в грузовики");

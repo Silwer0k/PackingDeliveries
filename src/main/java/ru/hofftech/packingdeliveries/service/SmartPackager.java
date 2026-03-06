@@ -23,7 +23,7 @@ public class SmartPackager extends Packager {
             }
             if (!isPlaced) {
                 Truck newTruck = new Truck();
-                newTruck.placePackage(cargo, newTruck.getDepth() - 1, 0);
+                newTruck.tryPlacePackage(cargo);
                 trucks.add(newTruck);
             }
         }

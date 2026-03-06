@@ -47,7 +47,7 @@ public class Truck {
         return false;
     }
 
-    public void placePackage(CargoPackage cargoPackage, int rowPos, int colPos) {
+    private void placePackage(CargoPackage cargoPackage, int rowPos, int colPos) {
         for (int packageRow = 0; packageRow < cargoPackage.getDepth(); packageRow++) {
             System.arraycopy(
                     cargoPackage.packageMatrixRow(packageRow),
