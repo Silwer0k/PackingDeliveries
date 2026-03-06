@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.diffplug.spotless' version "8.3.0"
 }
 
 group = 'ru.hofftech'
@@ -13,8 +14,28 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-classic:1.4.11'
 }
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ru.hofftech.Main'
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from(configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) })
+}
+
+spotless {
+    java {
+        palantirJavaFormat()
+        targetExclude("build/**")
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
