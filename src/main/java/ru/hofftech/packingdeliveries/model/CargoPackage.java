@@ -1,5 +1,6 @@
 package ru.hofftech.packingdeliveries.model;
 
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,14 @@ public class CargoPackage {
             }
         }
         log.info("Создан объект посылки с параметрами: Marker = {}, Width = {}, Depth = {}", marker, width, depth);
+    }
+
+    public int volume() {
+        return (int) Arrays.stream(packageMatrix)
+                .flatMapToInt(row -> new String(row).chars())
+                .mapToObj(cell -> (char) cell)
+                .filter(cell -> !cell.equals(Truck.emptySpaceMarker))
+                .count();
     }
 
     public char[] packageMatrixRow(int row) {

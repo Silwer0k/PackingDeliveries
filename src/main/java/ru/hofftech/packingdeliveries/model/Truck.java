@@ -1,5 +1,6 @@
 package ru.hofftech.packingdeliveries.model;
 
+import java.util.Arrays;
 import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,8 +10,8 @@ public class Truck {
     private static final char borderMarker = '+';
     private static final Logger log = LoggerFactory.getLogger(Truck.class);
     private static final Random randomizer = new Random();
-    private final short width = 6;
-    private final short depth = 6;
+    private static final short width = 6;
+    private static final short depth = 6;
     private final char[][] cargoSpace;
     private final String number;
 
@@ -68,6 +69,18 @@ public class Truck {
             str.append('\n');
         }
         return str.toString();
+    }
+
+    public int getLoadedVolume() {
+        return (int) Arrays.stream(cargoSpace)
+                .flatMapToInt(row -> new String(row).chars())
+                .mapToObj(cell -> (char) cell)
+                .filter(cell -> !cell.equals(emptySpaceMarker))
+                .count();
+    }
+
+    public static int getAllVolume() {
+        return width * depth;
     }
 
     private boolean isBorderCoords(int row, int column) {
