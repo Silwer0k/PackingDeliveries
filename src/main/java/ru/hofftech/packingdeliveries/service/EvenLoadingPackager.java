@@ -8,8 +8,12 @@ import ru.hofftech.packingdeliveries.model.Truck;
 public class EvenLoadingPackager extends Packager {
     private int approxTargetTrackLoadVolume;
 
+    public EvenLoadingPackager(int countOfTrucksToUse) {
+        super(countOfTrucksToUse);
+    }
+
     @Override
-    public void doPacking(ArrayList<CargoPackage> packagesToPack) {
+    public boolean doPacking(ArrayList<CargoPackage> packagesToPack) {
         log.info("Начало упаковки в грузовики");
         calcApproxValuesForPacking(packagesToPack);
 
@@ -24,12 +28,12 @@ public class EvenLoadingPackager extends Packager {
                 }
             }
             if (!isPlaced) {
-                Truck newTruck = new Truck();
-                newTruck.tryPlacePackage(cargo);
-                trucks.add(newTruck);
+                log.error("Не удалось разместить все посылки в грузовики!");
+                return false;
             }
         }
         log.info("Окончание упаковки в грузовики");
+        return true;
     }
 
     private void calcApproxValuesForPacking(ArrayList<CargoPackage> packagesToPack) {

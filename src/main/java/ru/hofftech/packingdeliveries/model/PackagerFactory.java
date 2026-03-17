@@ -6,12 +6,12 @@ import ru.hofftech.packingdeliveries.service.Packager;
 import ru.hofftech.packingdeliveries.service.SmartPackager;
 
 public class PackagerFactory {
-    public Packager construct(String packagingMethod) throws IllegalArgumentException {
+    public Packager construct(String packagingMethod, int countOfTrucksToUse) throws IllegalArgumentException {
         PackagingMethod method = PackagingMethod.valueOf(packagingMethod.toUpperCase());
         return switch (method) {
-            case SMART -> new SmartPackager();
-            case ONEBYONE -> new OneByOnePackager();
-            case EVENLOAD -> new EvenLoadingPackager();
+            case SMART -> new SmartPackager(countOfTrucksToUse);
+            case ONEBYONE -> new OneByOnePackager(countOfTrucksToUse);
+            case EVENLOAD -> new EvenLoadingPackager(countOfTrucksToUse);
         };
     }
 }

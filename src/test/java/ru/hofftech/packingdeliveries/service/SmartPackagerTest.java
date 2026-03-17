@@ -10,7 +10,8 @@ class SmartPackagerTest {
 
     @Test
     void doPacking4PackagesInOneTruck() {
-        SmartPackager testPackager = new SmartPackager();
+        boolean factPackingResult;
+        SmartPackager testPackager = new SmartPackager(1);
         ArrayList<CargoPackage> testPackages = new ArrayList<>(List.of(
                 new CargoPackage('2', 2, 1),
                 new CargoPackage('9', 3, 3),
@@ -25,8 +26,9 @@ class SmartPackagerTest {
                 .append("+99922 +\n")
                 .append("++++++++\n");
 
-        testPackager.doPacking(testPackages);
+        factPackingResult = testPackager.doPacking(testPackages);
 
+        Assertions.assertTrue(factPackingResult);
         Assertions.assertEquals(1, testPackager.trucks.size());
         Assertions.assertEquals(
                 expectedLoadingStructure.toString(),
@@ -35,7 +37,8 @@ class SmartPackagerTest {
 
     @Test
     void doPacking1PackageInTruck() {
-        SmartPackager testPackager = new SmartPackager();
+        boolean factPackingResult;
+        SmartPackager testPackager = new SmartPackager(1);
         ArrayList<CargoPackage> testPackages = new ArrayList<>(List.of(new CargoPackage('5', 5, 1)));
         StringBuilder expectedLoadingStructure = new StringBuilder()
                 .append("+      +\n")
@@ -46,8 +49,9 @@ class SmartPackagerTest {
                 .append("+55555 +\n")
                 .append("++++++++\n");
 
-        testPackager.doPacking(testPackages);
+        factPackingResult = testPackager.doPacking(testPackages);
 
+        Assertions.assertTrue(factPackingResult);
         Assertions.assertEquals(1, testPackager.trucks.size());
         Assertions.assertEquals(
                 expectedLoadingStructure.toString(),
@@ -56,7 +60,8 @@ class SmartPackagerTest {
 
     @Test
     void doPacking5Packages5AboveEachOtherInOneTruck() {
-        SmartPackager testPackager = new SmartPackager();
+        boolean factPackingResult;
+        SmartPackager testPackager = new SmartPackager(1);
         ArrayList<CargoPackage> testPackages = new ArrayList<>(List.of(
                 new CargoPackage('5', 5, 1),
                 new CargoPackage('5', 5, 1),
@@ -72,19 +77,23 @@ class SmartPackagerTest {
                 .append("+55555 +\n")
                 .append("++++++++\n");
 
-        testPackager.doPacking(testPackages);
+        factPackingResult = testPackager.doPacking(testPackages);
 
+        Assertions.assertTrue(factPackingResult);
         Assertions.assertEquals(1, testPackager.trucks.size());
         Assertions.assertEquals(testPackager.trucks.getFirst().toString(), expectedLoadingStructure.toString());
     }
 
     @Test
-    void doPackingEmptyListOfPackagesIsNoTrucks() {
-        SmartPackager testPackager = new SmartPackager();
+    void doPackingEmptyListOfPackagesIsAllTrucksIsEmpty() {
+        boolean factPackingResult;
+        SmartPackager testPackager = new SmartPackager(2);
         ArrayList<CargoPackage> emptyListOfPackages = new ArrayList<>();
 
-        testPackager.doPacking(emptyListOfPackages);
+        factPackingResult = testPackager.doPacking(emptyListOfPackages);
 
-        Assertions.assertTrue(testPackager.trucks.isEmpty());
+        Assertions.assertTrue(factPackingResult);
+        Assertions.assertEquals(2, testPackager.trucks.size());
+        testPackager.trucks.forEach(truck -> Assertions.assertEquals(0, truck.getLoadedVolume()));
     }
 }

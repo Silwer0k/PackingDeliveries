@@ -10,6 +10,12 @@ public abstract class Packager {
     protected final Logger log = LoggerFactory.getLogger(getClass());
     protected final ArrayList<Truck> trucks = new ArrayList<>();
 
+    public Packager(int countOfTrucksToUse) {
+        for (int i = 0; i < countOfTrucksToUse; i++) {
+            trucks.add(new Truck());
+        }
+    }
+
     public void showPackingResults() {
         String truckSpaceStr;
         StringBuilder logStrBuilder = new StringBuilder();
@@ -23,5 +29,5 @@ public abstract class Packager {
         }
     }
 
-    public abstract void doPacking(ArrayList<CargoPackage> packagesToPack);
+    public abstract boolean doPacking(ArrayList<CargoPackage> packagesToPack);
 }

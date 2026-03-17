@@ -10,21 +10,24 @@ class EvenLoadingPackagerTest {
 
     @Test
     void doPacking4PackagesInOneTruck() {
-        EvenLoadingPackager testPackager = new EvenLoadingPackager();
+        boolean factPackingResult;
+        EvenLoadingPackager testPackager = new EvenLoadingPackager(1);
         ArrayList<CargoPackage> testPackages = new ArrayList<>(List.of(
                 new CargoPackage('2', 2, 1),
                 new CargoPackage('9', 3, 3),
                 new CargoPackage('5', 5, 1),
                 new CargoPackage('8', 4, 2)));
 
-        testPackager.doPacking(testPackages);
+        factPackingResult = testPackager.doPacking(testPackages);
 
+        Assertions.assertTrue(factPackingResult);
         Assertions.assertEquals(1, testPackager.trucks.size());
     }
 
     @Test
     void doPacking6PackagesOf9SeperatedIn2Trucks() {
-        EvenLoadingPackager testPackager = new EvenLoadingPackager();
+        boolean factPackingResult;
+        EvenLoadingPackager testPackager = new EvenLoadingPackager(2);
         ArrayList<CargoPackage> testPackages = new ArrayList<>(List.of(
                 new CargoPackage('9', 3, 3),
                 new CargoPackage('9', 3, 3),
@@ -41,8 +44,40 @@ class EvenLoadingPackagerTest {
                 .append("+999999+\n")
                 .append("++++++++\n");
 
-        testPackager.doPacking(testPackages);
+        factPackingResult = testPackager.doPacking(testPackages);
 
+        Assertions.assertTrue(factPackingResult);
+        Assertions.assertEquals(2, testPackager.trucks.size());
+        Assertions.assertEquals(
+                expectedLoadingStructureTruck.toString(),
+                testPackager.trucks.getFirst().toString());
+        Assertions.assertEquals(
+                expectedLoadingStructureTruck.toString(),
+                testPackager.trucks.getLast().toString());
+    }
+
+    @Test
+    void doPacking5PackagesOf8NotFitIn2Trucks() {
+        boolean factPackingResult;
+        EvenLoadingPackager testPackager = new EvenLoadingPackager(2);
+        ArrayList<CargoPackage> testPackages = new ArrayList<>(List.of(
+                new CargoPackage('8', 4, 2),
+                new CargoPackage('8', 4, 2),
+                new CargoPackage('8', 4, 2),
+                new CargoPackage('8', 4, 2),
+                new CargoPackage('8', 4, 2)));
+        StringBuilder expectedLoadingStructureTruck = new StringBuilder()
+                .append("+      +\n")
+                .append("+      +\n")
+                .append("+8888  +\n")
+                .append("+8888  +\n")
+                .append("+8888  +\n")
+                .append("+8888  +\n")
+                .append("++++++++\n");
+
+        factPackingResult = testPackager.doPacking(testPackages);
+
+        Assertions.assertFalse(factPackingResult);
         Assertions.assertEquals(2, testPackager.trucks.size());
         Assertions.assertEquals(
                 expectedLoadingStructureTruck.toString(),

@@ -7,8 +7,12 @@ import ru.hofftech.packingdeliveries.model.Truck;
 
 public class SmartPackager extends Packager {
 
+    public SmartPackager(int countOfTrucksToUse) {
+        super(countOfTrucksToUse);
+    }
+
     @Override
-    public void doPacking(ArrayList<CargoPackage> packagesToPack) {
+    public boolean doPacking(ArrayList<CargoPackage> packagesToPack) {
         ArrayList<CargoPackage> sortedPackages = new ArrayList<>(packagesToPack);
         sortedPackages.sort(Comparator.comparing(CargoPackage::getMarker).reversed());
 
@@ -22,11 +26,11 @@ public class SmartPackager extends Packager {
                 }
             }
             if (!isPlaced) {
-                Truck newTruck = new Truck();
-                newTruck.tryPlacePackage(cargo);
-                trucks.add(newTruck);
+                log.error("Не удалось разместить все посылки в грузовики!");
+                return false;
             }
         }
         log.info("Окончание упаковки в грузовики");
+        return true;
     }
 }
