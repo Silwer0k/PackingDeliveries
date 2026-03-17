@@ -13,6 +13,7 @@ public class SmartPackager extends Packager {
 
     @Override
     public boolean doPacking(ArrayList<CargoPackage> packagesToPack) {
+        boolean packingResult = true;
         ArrayList<CargoPackage> sortedPackages = new ArrayList<>(packagesToPack);
         sortedPackages.sort(Comparator.comparing(CargoPackage::getMarker).reversed());
 
@@ -25,12 +26,12 @@ public class SmartPackager extends Packager {
                     break;
                 }
             }
-            if (!isPlaced) {
-                log.error("Не удалось разместить все посылки в грузовики!");
-                return false;
-            }
+            packingResult = packingResult && isPlaced;
         }
         log.info("Окончание упаковки в грузовики");
-        return true;
+        if (!packingResult) {
+            log.error("Не удалось разместить все посылки в грузовики!");
+        }
+        return packingResult;
     }
 }
