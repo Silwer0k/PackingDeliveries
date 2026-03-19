@@ -14,6 +14,7 @@ public class EvenLoadingPackager extends Packager {
 
     @Override
     public boolean doPacking(ArrayList<CargoPackage> packagesToPack) {
+        boolean packingResult = true;
         log.info("Начало упаковки в грузовики");
         calcApproxValuesForPacking(packagesToPack);
 
@@ -27,28 +28,24 @@ public class EvenLoadingPackager extends Packager {
                     break;
                 }
             }
-            if (!isPlaced) {
-                log.error("Не удалось разместить все посылки в грузовики!");
-                return false;
-            }
+            packingResult = packingResult && isPlaced;
         }
         log.info("Окончание упаковки в грузовики");
-        return true;
+        if (!packingResult) {
+            log.error("Не удалось разместить все посылки в грузовики!");
+        }
+        return packingResult;
     }
 
     private void calcApproxValuesForPacking(ArrayList<CargoPackage> packagesToPack) {
         int volumePackages =
                 packagesToPack.stream().mapToInt(CargoPackage::volume).sum();
 
-        int approxTargetTrucksCount;
-        if (volumePackages > Truck.getAllVolume()) {
-            approxTargetTrucksCount = (int) Math.ceil((double) volumePackages / Truck.getAllVolume());
-            approxTargetTrackLoadVolume = (int) Math.ceil((double) volumePackages / approxTargetTrucksCount);
+        if (volumePackages > Truck.getAllVolume() && !trucks.isEmpty()) {
+            approxTargetTrackLoadVolume = (int) Math.ceil((double) volumePackages / trucks.size());
         } else {
             approxTargetTrackLoadVolume = Truck.getAllVolume();
-            approxTargetTrucksCount = 1;
         }
-        log.info("Ориентировочное кол-во грузовиков для упаковки: {}", approxTargetTrucksCount);
         log.info("Ориентировочная загрузка грузовиков: {}", approxTargetTrackLoadVolume);
     }
 }
