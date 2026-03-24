@@ -1,11 +1,8 @@
 package ru.hofftech.packingdeliveries.service.command;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.hofftech.packingdeliveries.service.unpackagers.UnpackagerFromJsonFile;
 
 public class UnpackingCommand implements CommandProcessor {
-    private static final Logger log = LoggerFactory.getLogger(UnpackingCommand.class);
     private final String trucksJsonFilename;
 
     UnpackingCommand(String[] args) {
