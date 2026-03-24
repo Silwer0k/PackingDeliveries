@@ -1,0 +1,34 @@
+[ {
+  "number" : "91",
+  "width" : 6,
+  "depth" : 6,
+  "loadedVolume" : 12,
+  "packages" : [ {
+    "rowPos" : 5,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "6",
+      "width" : 3,
+      "depth" : 2,
+      "shape" : "666\n666\n"
+    }
+  }, {
+    "rowPos" : 3,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "5",
+      "width" : 5,
+      "depth" : 1,
+      "shape" : "55555\n"
+    }
+  }, {
+    "rowPos" : 5,
+    "colPos" : 3,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  } ]
+} ]

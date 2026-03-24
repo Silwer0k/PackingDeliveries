@@ -1,4 +1,4 @@
-package ru.hofftech.packingdeliveries.service;
+package ru.hofftech.packingdeliveries.service.packagers;
 
 import java.util.ArrayList;
 import java.util.Comparator;

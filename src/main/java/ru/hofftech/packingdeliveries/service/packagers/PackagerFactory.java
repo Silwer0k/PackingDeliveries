@@ -1,9 +1,6 @@
-package ru.hofftech.packingdeliveries.model;
+package ru.hofftech.packingdeliveries.service.packagers;
 
-import ru.hofftech.packingdeliveries.service.EvenLoadingPackager;
-import ru.hofftech.packingdeliveries.service.OneByOnePackager;
-import ru.hofftech.packingdeliveries.service.Packager;
-import ru.hofftech.packingdeliveries.service.SmartPackager;
+import ru.hofftech.packingdeliveries.model.enums.PackagingMethod;
 
 public class PackagerFactory {
     public Packager construct(String packagingMethod, int countOfTrucksToUse) throws IllegalArgumentException {

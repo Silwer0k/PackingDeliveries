@@ -1,4 +1,4 @@
-package ru.hofftech.packingdeliveries.model;
+package ru.hofftech.packingdeliveries.model.enums;
 
 public enum PackagingMethod {
     ONEBYONE,
