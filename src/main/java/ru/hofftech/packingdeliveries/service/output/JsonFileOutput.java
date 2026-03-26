@@ -2,7 +2,7 @@ package ru.hofftech.packingdeliveries.service.output;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hofftech.packingdeliveries.model.Outputable;
@@ -16,7 +16,7 @@ public class JsonFileOutput extends FileOutput {
     }
 
     @Override
-    public boolean doOutput(ArrayList<? extends Outputable> toOutput) {
+    public boolean doOutput(List<? extends Outputable> toOutput) {
         try {
             JsonConverter.toJsonFile(toOutput, fileName);
         } catch (JsonProcessingException e) {

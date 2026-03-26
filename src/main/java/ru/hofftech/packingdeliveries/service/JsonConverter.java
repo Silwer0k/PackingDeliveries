@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import ru.hofftech.packingdeliveries.model.Outputable;
 import ru.hofftech.packingdeliveries.model.jsonDataContract.JsonDataContract;
 
@@ -17,7 +18,7 @@ public class JsonConverter {
         jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
-    public static void toJsonFile(ArrayList<? extends Outputable> objectsList, String filename) throws IOException {
+    public static void toJsonFile(List<? extends Outputable> objectsList, String filename) throws IOException {
         jsonMapper.writeValue(new File(filename), toJsonContractsList(objectsList));
     }
 
@@ -25,7 +26,7 @@ public class JsonConverter {
         return jsonMapper.readValue(new File(filename), typeReference);
     }
 
-    private static ArrayList<JsonDataContract> toJsonContractsList(ArrayList<? extends Outputable> objectsList) {
+    private static List<JsonDataContract> toJsonContractsList(List<? extends Outputable> objectsList) {
         ArrayList<JsonDataContract> jsonDataContractList = new ArrayList<JsonDataContract>();
         for (Outputable outputableObj : objectsList) {
             jsonDataContractList.add(outputableObj.toJsonDataContract());

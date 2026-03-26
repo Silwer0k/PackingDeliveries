@@ -11,8 +11,8 @@ public class CommandProcessorService {
         try {
             CommandProcessorType commandType = CommandProcessorType.valueOf(args[0].toUpperCase());
             switch (commandType) {
-                case PACKING -> new PackingCommand(args).doProccess();
-                case UNPACKING -> new UnpackingCommand(args).doProccess();
+                case PACKING -> new PackingCommand(args).doProcess();
+                case UNPACKING -> new UnpackingCommand(args).doProcess();
                 default -> throw new IllegalArgumentException();
             }
         } catch (IllegalArgumentException | IndexOutOfBoundsException exception) {

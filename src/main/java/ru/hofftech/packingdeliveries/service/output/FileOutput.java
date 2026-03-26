@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hofftech.packingdeliveries.model.Outputable;
@@ -24,7 +24,7 @@ public class FileOutput implements OutputStrategy {
     }
 
     @Override
-    public boolean doOutput(ArrayList<? extends Outputable> toOutput) {
+    public boolean doOutput(List<? extends Outputable> toOutput) {
         try {
             StringBuilder resultStringBuilder = new StringBuilder();
             for (Outputable outputObj : toOutput) {

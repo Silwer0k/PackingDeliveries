@@ -1,7 +1,7 @@
 package ru.hofftech.packingdeliveries.service.command;
 
 public interface CommandProcessor {
-    void doProccess();
+    void doProcess();
 
     boolean validate(String[] args);
 }

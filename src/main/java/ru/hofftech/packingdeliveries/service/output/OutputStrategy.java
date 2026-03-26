@@ -1,8 +1,8 @@
 package ru.hofftech.packingdeliveries.service.output;
 
-import java.util.ArrayList;
+import java.util.List;
 import ru.hofftech.packingdeliveries.model.Outputable;
 
 public interface OutputStrategy {
-    boolean doOutput(ArrayList<? extends Outputable> toOutput);
+    boolean doOutput(List<? extends Outputable> toOutput);
 }

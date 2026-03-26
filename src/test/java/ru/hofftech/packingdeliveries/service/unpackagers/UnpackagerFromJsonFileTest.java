@@ -17,7 +17,8 @@ class UnpackagerFromJsonFileTest {
 
     @Test
     void doUnpackingIncorrectJsonStructNotThrowException() {
-        UnpackagerFromJsonFile testUnpackager = new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/incorrect_json_struct.txt");
+        UnpackagerFromJsonFile testUnpackager =
+                new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/incorrect_json_struct.txt");
 
         Assertions.assertDoesNotThrow(() -> {
             boolean factResult;
@@ -28,7 +29,8 @@ class UnpackagerFromJsonFileTest {
 
     @Test
     void doUnpackingEmptyFileNotThrowException() {
-        UnpackagerFromJsonFile testUnpackager = new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/empty_json.txt");
+        UnpackagerFromJsonFile testUnpackager =
+                new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/empty_json.txt");
 
         Assertions.assertDoesNotThrow(() -> {
             boolean factResult;
@@ -40,7 +42,8 @@ class UnpackagerFromJsonFileTest {
     @Test
     void doUnpackingEmptyListOfTruckIsNoUnpackedPackages() {
         boolean factResult;
-        UnpackagerFromJsonFile testUnpackager = new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/empty_trucks_list.txt");
+        UnpackagerFromJsonFile testUnpackager =
+                new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/empty_trucks_list.txt");
 
         factResult = testUnpackager.doUnpacking();
 
@@ -51,7 +54,8 @@ class UnpackagerFromJsonFileTest {
     @Test
     void doUnpackingEmptyTruckIsNotUnpackedPackages() {
         boolean factResult;
-        UnpackagerFromJsonFile testUnpackager = new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/truck_without_packages.txt");
+        UnpackagerFromJsonFile testUnpackager =
+                new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/truck_without_packages.txt");
 
         factResult = testUnpackager.doUnpacking();
 
@@ -62,7 +66,8 @@ class UnpackagerFromJsonFileTest {
     @Test
     void doUnpackingOneTruckWith3PackagesIs3UnpackedPackages() {
         boolean factResult;
-        UnpackagerFromJsonFile testUnpackager = new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/one_truck_3Packages.txt");
+        UnpackagerFromJsonFile testUnpackager =
+                new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/one_truck_3Packages.txt");
 
         factResult = testUnpackager.doUnpacking();
 
@@ -73,7 +78,8 @@ class UnpackagerFromJsonFileTest {
     @Test
     void doUnpacking3TrucksWith3PackagesIs9UnloadedPackages() {
         boolean factResult;
-        UnpackagerFromJsonFile testUnpackager = new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/three_trucks.txt");
+        UnpackagerFromJsonFile testUnpackager =
+                new UnpackagerFromJsonFile("src/test/resources/testFiles/unpackagers/three_trucks.txt");
 
         factResult = testUnpackager.doUnpacking();
 
