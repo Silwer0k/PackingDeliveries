@@ -1,17 +1,22 @@
 package ru.hofftech.packingdeliveries.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.hofftech.packingdeliveries.model.jsonDataContract.LoadedPackageDataContract;
+import ru.hofftech.packingdeliveries.model.jsonDataContract.TruckDataContract;
 
-public class Truck {
+public class Truck implements Outputable {
     public static final char emptySpaceMarker = ' ';
     private static final char borderMarker = '+';
     private static final Logger log = LoggerFactory.getLogger(Truck.class);
     private static final Random randomizer = new Random();
-    private final short width = 6;
-    private final short depth = 6;
+    private static final short width = 6;
+    private static final short depth = 6;
     private final char[][] cargoSpace;
+    private final ArrayList<CargoPackagePosition> loadedPackages;
     private final String number;
 
     public String getNumber() {
@@ -29,6 +34,7 @@ public class Truck {
     public Truck() {
         cargoSpace = new char[width][depth];
         number = String.valueOf(randomizer.nextInt(100));
+        loadedPackages = new ArrayList<CargoPackagePosition>();
         log.info("Создан объект грузовика {} с параметрами Width: {} Depth: {}", number, width, depth);
         doEmpty();
     }
@@ -47,7 +53,7 @@ public class Truck {
         return false;
     }
 
-    private void placePackage(CargoPackage cargoPackage, int rowPos, int colPos) {
+    public void placePackage(CargoPackage cargoPackage, int rowPos, int colPos) {
         for (int packageRow = 0; packageRow < cargoPackage.getDepth(); packageRow++) {
             System.arraycopy(
                     cargoPackage.packageMatrixRow(packageRow),
@@ -56,7 +62,12 @@ public class Truck {
                     colPos,
                     cargoPackage.getWidth());
         }
+        loadedPackages.add(new CargoPackagePosition(rowPos, colPos, cargoPackage));
         log.info("Посылка {} размещена на позицию {},{}", cargoPackage.toString(), rowPos, colPos);
+    }
+
+    public ArrayList<CargoPackagePosition> getLoadedPackages() {
+        return loadedPackages;
     }
 
     public String toString() {
@@ -70,17 +81,44 @@ public class Truck {
         return str.toString();
     }
 
-    private boolean isBorderCoords(int row, int column) {
-        return ((row == depth) || (column == -1) || (column == width));
+    public int getLoadedVolume() {
+        return (int) Arrays.stream(cargoSpace)
+                .flatMapToInt(row -> new String(row).chars())
+                .mapToObj(cell -> (char) cell)
+                .filter(cell -> !cell.equals(emptySpaceMarker))
+                .count();
     }
 
-    private void doEmpty() {
+    public static int getAllVolume() {
+        return width * depth;
+    }
+
+    public void doEmpty() {
         for (int row = 0; row < depth; row++) {
             for (int col = 0; col < width; col++) {
                 cargoSpace[row][col] = emptySpaceMarker;
             }
         }
+        loadedPackages.clear();
         log.info("Разгрузили грузовик");
+    }
+
+    @Override
+    public String toOutputValue() {
+        return toString();
+    }
+
+    @Override
+    public TruckDataContract toJsonDataContract() {
+        ArrayList<LoadedPackageDataContract> loadedPackagesDCList = new ArrayList<LoadedPackageDataContract>();
+        for (CargoPackagePosition loadedPackage : loadedPackages) {
+            loadedPackagesDCList.add(loadedPackage.toJsonDataContract());
+        }
+        return new TruckDataContract(number, width, depth, getLoadedVolume(), loadedPackagesDCList);
+    }
+
+    private boolean isBorderCoords(int row, int column) {
+        return ((row == depth) || (column == -1) || (column == width));
     }
 
     private boolean checkCargoSpaceForPackage(CargoPackage cargoPackage, int rowPos, int colPos) {

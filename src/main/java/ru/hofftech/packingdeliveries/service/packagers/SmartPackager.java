@@ -1,4 +1,4 @@
-package ru.hofftech.packingdeliveries.service;
+package ru.hofftech.packingdeliveries.service.packagers;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -7,8 +7,13 @@ import ru.hofftech.packingdeliveries.model.Truck;
 
 public class SmartPackager extends Packager {
 
+    public SmartPackager(int countOfTrucksToUse) {
+        super(countOfTrucksToUse);
+    }
+
     @Override
-    public void doPacking(ArrayList<CargoPackage> packagesToPack) {
+    public boolean doPacking(ArrayList<CargoPackage> packagesToPack) {
+        boolean packingResult = true;
         ArrayList<CargoPackage> sortedPackages = new ArrayList<>(packagesToPack);
         sortedPackages.sort(Comparator.comparing(CargoPackage::getMarker).reversed());
 
@@ -21,12 +26,12 @@ public class SmartPackager extends Packager {
                     break;
                 }
             }
-            if (!isPlaced) {
-                Truck newTruck = new Truck();
-                newTruck.tryPlacePackage(cargo);
-                trucks.add(newTruck);
-            }
+            packingResult = packingResult && isPlaced;
         }
         log.info("Окончание упаковки в грузовики");
+        if (!packingResult) {
+            log.error("Не удалось разместить все посылки в грузовики!");
+        }
+        return packingResult;
     }
 }

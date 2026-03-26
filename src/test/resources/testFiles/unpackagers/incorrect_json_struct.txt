@@ -1,0 +1,191 @@
+[ {
+  "number" : "85",
+  "width" : 6,
+  "depth" : 6,
+  "loadedVolume" : 36,
+  "packages" : [ {
+    "rowPos" : 5,
+    "cer" : "5",
+      "width" : 5,
+      "depth" : 1,
+      "shape" : "55555\n"
+    }
+  }
+    "rowPos" : 1,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "5",
+      "width" : 5,
+      "depth" : 1,
+      "shape" : "55555\n"
+    }
+  }, {
+    "rowPos" : 0,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "4",
+      "width" : 4,
+      "depth" : 1,
+      "shape" : "4444\n"
+    }
+  }, {
+    "rowPos" : 3,
+    "colPos" : 3,
+    "cargoPackage" : {
+      "marker" : "3",
+      "width" : 3,
+      "depth" : 1,
+      "shape" : "333\n"
+    }
+  }, {
+    "rowPos" : 2,
+    "colPos" : 5,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  }, {
+    "rowPos" : 1,
+    "colPos" : 5,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  }, {
+    "rowPos" : 0,
+    "colPos" : 4,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  }, {
+    "rowPos" : 0,
+    "colPos" : 5,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  } ]
+}, {
+  "number" : "51",
+  "width" : 6,
+  "depth" : 6,
+  "loadedVolume" : 25,
+  "packages" : [ {
+    "rowPos" : 5,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "4",
+      "width" : 4,
+      "depth" : 1,
+      "shape" : "4444\n"
+    }
+  }, {
+    "rowPos" : 4,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "3",
+      "width" : 3,
+      "depth" : 1,
+      "shape" : "333\n"
+    }
+  }, {
+    "rowPos" : 3,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "3",
+      "width" : 3,
+      "depth" : 1,
+      "shape" : "333\n"
+    }
+  }, {
+    "rowPos" : 2,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "3",
+      "width" : 3,
+      "depth" : 1,
+      "shape" : "333\n"
+    }
+  }, {
+    "rowPos" : 5,
+    "colPos" : 4,
+    "cargoPackage" : {
+      "marker" : "2",
+      "width" : 2,
+      "depth" : 1,
+      "shape" : "22\n"
+    }
+  }, {
+    "rowPos" : 4,
+    "colPos" : 3,
+    "cargoPackage" : {
+      "marker" : "2",
+      "width" : 2,
+      "depth" : 1,
+      "shape" : "22\n"
+    }
+  }, {
+    "rowPos" : 3,
+    "colPos" : 3,
+    "cargoPackage" : {
+      "marker" : "2",
+      "width" : 2,
+      "depth" : 1,
+      "shape" : "22\n"
+    }
+  }, {
+    "rowPos" : 2,
+    "colPos" : 3,
+    "cargoPackage" : {
+      "marker" : "2",
+      "width" : 2,
+      "depth" : 1,
+      "shape" : "22\n"
+    }
+  }, {
+    "rowPos" : 4,
+    "colPos" : 5,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  }, {
+    "rowPos" : 3,
+    "colPos" : 5,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  }, {
+    "rowPos" : 2,
+    "colPos" : 5,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  }, {
+    "rowPos" : 1,
+    "colPos" : 0,
+    "cargoPackage" : {
+      "marker" : "1",
+      "width" : 1,
+      "depth" : 1,
+      "shape" : "1\n"
+    }
+  } ]
+} ]
