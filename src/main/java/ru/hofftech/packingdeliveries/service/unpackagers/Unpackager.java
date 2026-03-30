@@ -1,6 +1,7 @@
 package ru.hofftech.packingdeliveries.service.unpackagers;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hofftech.packingdeliveries.model.CargoPackage;
@@ -16,7 +17,7 @@ public abstract class Unpackager {
 
     public abstract boolean doUnpacking();
 
-    protected void unpackTrucks(ArrayList<Truck> trucksToUnpack) {
+    protected void unpackTrucks(List<Truck> trucksToUnpack) {
         for (Truck truckToUnpack : trucksToUnpack) {
             for (CargoPackagePosition cargoPackagePos : truckToUnpack.getLoadedPackages()) {
                 unpackedPackages.add(cargoPackagePos.getCargoPackage());

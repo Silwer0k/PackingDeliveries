@@ -6,7 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hofftech.packingdeliveries.model.Outputable;
-import ru.hofftech.packingdeliveries.service.JsonConverter;
+import ru.hofftech.packingdeliveries.util.JsonConverter;
 
 public class JsonFileOutput extends FileOutput {
     protected final Logger log = LoggerFactory.getLogger(JsonFileOutput.class);

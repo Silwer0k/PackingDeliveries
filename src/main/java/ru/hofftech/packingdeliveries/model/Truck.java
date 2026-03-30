@@ -5,8 +5,7 @@ import java.util.Arrays;
 import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.hofftech.packingdeliveries.model.jsonDataContract.LoadedPackageDataContract;
-import ru.hofftech.packingdeliveries.model.jsonDataContract.TruckDataContract;
+import ru.hofftech.packingdeliveries.util.Default;
 
 public class Truck implements Outputable {
     public static final char emptySpaceMarker = ' ';
@@ -37,6 +36,18 @@ public class Truck implements Outputable {
         loadedPackages = new ArrayList<CargoPackagePosition>();
         log.info("Создан объект грузовика {} с параметрами Width: {} Depth: {}", number, width, depth);
         doEmpty();
+    }
+
+    @Default
+    public Truck(ArrayList<CargoPackagePosition> loadedPackages, String number) {
+        cargoSpace = new char[width][depth];
+        this.number = number;
+        this.loadedPackages = new ArrayList<CargoPackagePosition>();
+        doEmpty();
+        loadedPackages.forEach((loadedPackage) ->
+                placePackage(loadedPackage.getCargoPackage(), loadedPackage.getRowPos(), loadedPackage.getColPos()));
+        log.info(
+                "Создан грузовик {} Width: {} Depth: {} с загруженными посылками с параметрами ", number, width, depth);
     }
 
     public boolean tryPlacePackage(CargoPackage cargoPackage) {
@@ -106,15 +117,6 @@ public class Truck implements Outputable {
     @Override
     public String toOutputValue() {
         return toString();
-    }
-
-    @Override
-    public TruckDataContract toJsonDataContract() {
-        ArrayList<LoadedPackageDataContract> loadedPackagesDCList = new ArrayList<LoadedPackageDataContract>();
-        for (CargoPackagePosition loadedPackage : loadedPackages) {
-            loadedPackagesDCList.add(loadedPackage.toJsonDataContract());
-        }
-        return new TruckDataContract(number, width, depth, getLoadedVolume(), loadedPackagesDCList);
     }
 
     private boolean isBorderCoords(int row, int column) {

@@ -1,7 +1,5 @@
 package ru.hofftech.packingdeliveries.model;
 
-import ru.hofftech.packingdeliveries.model.jsonDataContract.LoadedPackageDataContract;
-
 public class CargoPackagePosition implements Outputable {
     private final int rowPos;
     private final int colPos;
@@ -28,10 +26,5 @@ public class CargoPackagePosition implements Outputable {
     @Override
     public String toOutputValue() {
         return "";
-    }
-
-    @Override
-    public LoadedPackageDataContract toJsonDataContract() {
-        return new LoadedPackageDataContract(rowPos, colPos, cargoPackage.toJsonDataContract());
     }
 }

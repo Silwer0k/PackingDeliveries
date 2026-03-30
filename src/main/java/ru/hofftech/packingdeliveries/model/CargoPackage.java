@@ -3,7 +3,6 @@ package ru.hofftech.packingdeliveries.model;
 import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.hofftech.packingdeliveries.model.jsonDataContract.CargoPackageDataContract;
 
 public class CargoPackage implements Outputable {
     private static final Logger log = LoggerFactory.getLogger(CargoPackage.class);
@@ -35,21 +34,25 @@ public class CargoPackage implements Outputable {
         return shape.toString();
     }
 
-    public CargoPackage(char packageMarker, int packageWidth, int packageDepth) {
-        marker = packageMarker;
-        width = packageWidth;
-        depth = packageDepth;
-        int weight = Character.getNumericValue(marker);
+    public CargoPackage(char marker, int width, int depth) {
+        this.marker = marker;
+        this.width = width;
+        this.depth = depth;
+        int weight = Character.getNumericValue(this.marker);
 
         int curWeight = 0;
-        packageMatrix = new char[depth][width];
-        for (int row = depth - 1; row >= 0; row--) {
-            for (int col = 0; col < width; col++) {
+        packageMatrix = new char[this.depth][this.width];
+        for (int row = this.depth - 1; row >= 0; row--) {
+            for (int col = 0; col < this.width; col++) {
                 curWeight++;
-                packageMatrix[row][col] = (curWeight <= weight) ? marker : Truck.emptySpaceMarker;
+                packageMatrix[row][col] = (curWeight <= weight) ? this.marker : Truck.emptySpaceMarker;
             }
         }
-        log.info("Создан объект посылки с параметрами: Marker = {}, Width = {}, Depth = {}", marker, width, depth);
+        log.info(
+                "Создан объект посылки с параметрами: Marker = {}, Width = {}, Depth = {}",
+                this.marker,
+                this.width,
+                this.depth);
     }
 
     public int volume() {
@@ -71,10 +74,5 @@ public class CargoPackage implements Outputable {
     @Override
     public String toOutputValue() {
         return packageShape();
-    }
-
-    @Override
-    public CargoPackageDataContract toJsonDataContract() {
-        return new CargoPackageDataContract(marker, width, depth, packageShape());
     }
 }
