@@ -3,6 +3,7 @@ package ru.hofftech.packingdeliveries.util;
 import java.util.List;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.SubclassExhaustiveStrategy;
 import org.mapstruct.SubclassMapping;
@@ -51,5 +52,6 @@ public interface ModelDtoMapper {
 
     CargoPackage toCargoPackage(CargoPackageDto packageDto);
 
+    @Mapping(target = "shape", expression = "java(cargoPackage.packageShape())")
     CargoPackageDto toCargoPackageDto(CargoPackage cargoPackage);
 }
