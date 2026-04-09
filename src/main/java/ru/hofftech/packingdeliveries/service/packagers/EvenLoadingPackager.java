@@ -5,6 +5,13 @@ import java.util.Comparator;
 import ru.hofftech.packingdeliveries.model.CargoPackage;
 import ru.hofftech.packingdeliveries.model.Truck;
 
+/**
+ * Упаковщик, реализующий стратегию равномерной загрузки (EVENLOAD).
+ * <p>
+ * Алгоритм стремится распределить посылки так, чтобы объем занятого пространства
+ * в каждом грузовике был примерно одинаковым. Для этого перед каждой итерацией
+ * грузовики сортируются по текущей загрузке, а целевой объем ограничивается средним значением.
+ */
 public class EvenLoadingPackager extends Packager {
     private int approxTargetTrackLoadVolume;
 
@@ -12,6 +19,19 @@ public class EvenLoadingPackager extends Packager {
         super(countOfTrucksToUse);
     }
 
+    /**
+     * Выполняет упаковку посылок с соблюдением баланса загрузки.
+     * <p>
+     * Особенности алгоритма:
+     * <ol>
+     *     <li>Вычисляет средний объем груза на одну машину через {@link #calcApproxValuesForPacking}.</li>
+     *     <li>Сортирует список грузовиков по возрастанию занятого объема (сначала самые пустые).</li>
+     *     <li>Пытается разместить посылку в грузовик, если его текущий объем не превышает средний расчетный.</li>
+     * </ol>
+     *
+     * @param packagesToPack список посылок для размещения
+     * @return {@code true}, если все посылки удалось распределить; {@code false}, если возникли трудности с размещением
+     */
     @Override
     public boolean doPacking(ArrayList<CargoPackage> packagesToPack) {
         boolean packingResult = true;
@@ -37,6 +57,15 @@ public class EvenLoadingPackager extends Packager {
         return packingResult;
     }
 
+    /**
+     * Рассчитывает средний объем посылок на один грузовик.
+     * <p>
+     * Если суммарный объем посылок превышает вместимость одного грузовика,
+     * значение устанавливается как {@code общая масса / количество машин}.
+     * В противном случае лимит устанавливается равным полной вместимости одного грузовика.
+     *
+     * @param packagesToPack список всех упаковываемых посылок
+     */
     private void calcApproxValuesForPacking(ArrayList<CargoPackage> packagesToPack) {
         int volumePackages =
                 packagesToPack.stream().mapToInt(CargoPackage::volume).sum();

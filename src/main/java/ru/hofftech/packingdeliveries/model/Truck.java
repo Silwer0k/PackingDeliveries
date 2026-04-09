@@ -7,6 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.hofftech.packingdeliveries.util.Default;
 
+/**
+ * Представляет грузовик для загрузки посылок.
+ * <p>
+ * Класс управляет грузовым пространством фиксированного размера ({@value #width}x{@value #depth}),
+ * отслеживает размещенные объекты {@link CargoPackage} и проверяет физическую
+ * возможность их установки (наличие опоры и свободного места).
+ */
 public class Truck implements Outputable {
     public static final char emptySpaceMarker = ' ';
     private static final char borderMarker = '+';
@@ -18,18 +25,30 @@ public class Truck implements Outputable {
     private final ArrayList<CargoPackagePosition> loadedPackages;
     private final String number;
 
+    /**
+     * @return уникальный номер грузовика
+     */
     public String getNumber() {
         return number;
     }
 
+    /**
+     * @return ширина грузового пространства
+     */
     public short getWidth() {
         return width;
     }
 
+    /**
+     * @return глубина (высота) грузового пространства
+     */
     public short getDepth() {
         return depth;
     }
 
+    /**
+     * Создает новый пустой грузовик со случайным номером и фиксированным размером 6х6
+     */
     public Truck() {
         cargoSpace = new char[width][depth];
         number = String.valueOf(randomizer.nextInt(100));
@@ -38,6 +57,12 @@ public class Truck implements Outputable {
         doEmpty();
     }
 
+    /**
+     * Создает грузовик фиксированным размером 6х6 с заданным номером и списком уже загруженных посылок.
+     *
+     * @param loadedPackages список позиций посылок для инициализации кузова
+     * @param number         идентификатор грузовика
+     */
     @Default
     public Truck(ArrayList<CargoPackagePosition> loadedPackages, String number) {
         cargoSpace = new char[width][depth];
@@ -50,6 +75,15 @@ public class Truck implements Outputable {
                 "Создан грузовик {} Width: {} Depth: {} с загруженными посылками с параметрами ", number, width, depth);
     }
 
+    /**
+     * Пытается автоматически найти место и разместить посылку в кузове.
+     * <p>
+     * Поиск ведется снизу вверх, слева направо. Для успешного размещения
+     * должны быть соблюдены условия свободного пространства и устойчивости (опоры).
+     *
+     * @param cargoPackage объект посылки для размещения
+     * @return {@code true}, если место найдено и посылка размещена; {@code false} в противном случае
+     */
     public boolean tryPlacePackage(CargoPackage cargoPackage) {
         for (int row = depth - 1; row >= 0; row--) {
             for (int col = 0; col < width; col++) {
@@ -64,6 +98,14 @@ public class Truck implements Outputable {
         return false;
     }
 
+    /**
+     * Принудительно размещает посылку по указанным координатам.
+     * Обновляет матрицу кузова и добавляет информацию в список загруженных посылок.
+     *
+     * @param cargoPackage посылка для размещения
+     * @param rowPos       индекс целевой строки (нижняя точка посылки)
+     * @param colPos       индекс целевого столбца (левая точка посылки)
+     */
     public void placePackage(CargoPackage cargoPackage, int rowPos, int colPos) {
         for (int packageRow = 0; packageRow < cargoPackage.getDepth(); packageRow++) {
             System.arraycopy(
@@ -77,10 +119,18 @@ public class Truck implements Outputable {
         log.info("Посылка {} размещена на позицию {},{}", cargoPackage.toString(), rowPos, colPos);
     }
 
+    /**
+     * @return список всех размещенных в данный момент посылок с их координатами
+     */
     public ArrayList<CargoPackagePosition> getLoadedPackages() {
         return loadedPackages;
     }
 
+    /**
+     * Формирует визуальное представление кузова грузовика с границами.
+     *
+     * @return строковая схема кузова, где границы обозначены символом '+'
+     */
     public String toString() {
         StringBuilder str = new StringBuilder();
         for (int row = 0; row <= depth; row++) {
@@ -92,6 +142,12 @@ public class Truck implements Outputable {
         return str.toString();
     }
 
+    /**
+     * Вычисляет текущий занятый объем кузова.
+     * Считается как сумма всех ячеек, не являющихся пустыми (отличных от {@link #emptySpaceMarker}).
+     *
+     * @return количество занятых ячеек
+     */
     public int getLoadedVolume() {
         return (int) Arrays.stream(cargoSpace)
                 .flatMapToInt(row -> new String(row).chars())
@@ -100,10 +156,19 @@ public class Truck implements Outputable {
                 .count();
     }
 
+    /**
+     * Возвращает общую вместимость кузова (площадь матрицы).
+     *
+     * @return общее количество доступных ячеек
+     */
     public static int getAllVolume() {
         return width * depth;
     }
 
+    /**
+     * Полностью очищает грузовой отсек.
+     * Заполняет матрицу символами пустоты и удаляет все записи о посылках.
+     */
     public void doEmpty() {
         for (int row = 0; row < depth; row++) {
             for (int col = 0; col < width; col++) {
@@ -114,6 +179,9 @@ public class Truck implements Outputable {
         log.info("Разгрузили грузовик");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toOutputValue() {
         return toString();
