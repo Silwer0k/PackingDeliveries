@@ -1,8 +1,18 @@
 package ru.hofftech.packingdeliveries.model;
 
-import ru.hofftech.packingdeliveries.model.jsonDataContract.JsonDataContract;
-
+/**
+ * Определяет контракт для объектов, которые могут быть преобразованы
+ * в строковое представление для вывода в консоль, файл или другие интерфейсы.
+ * <p>
+ * В отличие от стандартного {@link Object#toString()}, этот интерфейс
+ * предназначен для формирования форматированного вывода, ориентированного
+ * на конечного пользователя.
+ */
 public interface Outputable {
+    /**
+     * Возвращает строковое представление объекта, подготовленное для вывода.
+     *
+     * @return строка с данными объекта в человекочитаемом формате
+     */
     String toOutputValue();
-    JsonDataContract toJsonDataContract();
 }
