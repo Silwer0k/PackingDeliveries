@@ -5,6 +5,7 @@ build/
 !**/src/test/**/build/
 *.txt
 *.json
+*.log
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

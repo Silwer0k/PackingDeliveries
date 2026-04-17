@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 import ru.hofftech.packingdeliveries.model.CargoPackage;
 
 /**
@@ -15,6 +16,7 @@ import ru.hofftech.packingdeliveries.model.CargoPackage;
  * где ключом выступает уникальное имя посылки. При создании инициализируется
  * стандартным набором грузов.
  */
+@Repository
 public class CargoPackageRepository {
     private static final Logger log = LoggerFactory.getLogger(CargoPackageRepository.class);
     protected HashMap<String, CargoPackage> packagesRepo = new HashMap<>();

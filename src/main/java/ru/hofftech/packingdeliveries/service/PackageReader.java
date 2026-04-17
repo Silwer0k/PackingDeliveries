@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import ru.hofftech.packingdeliveries.service.command.params.PackingParams;
 
 /**
@@ -18,6 +19,7 @@ import ru.hofftech.packingdeliveries.service.command.params.PackingParams;
  * Класс сканирует содержимое файлов и с помощью регулярных выражений извлекает
  * текстовые идентификаторы посылок, подготовленные для последующей упаковки.
  */
+@Component
 public class PackageReader {
     private static final Logger log = LoggerFactory.getLogger(PackageReader.class);
     private static final String packagesNamesRegex = "\"(.+)\"";

@@ -1,18 +1,17 @@
-package ru.hofftech;
+package ru.hofftech.packingdeliveries;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import ru.hofftech.packingdeliveries.controller.ConsoleListener;
-import ru.hofftech.packingdeliveries.controller.TelegramCommandBot;
-import ru.hofftech.packingdeliveries.service.repository.CargoPackageRepository;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.shell.core.command.annotation.EnableCommand;
 
+@SpringBootApplication
+@EnableCommand
 public class Main {
-    private static final Logger log = LoggerFactory.getLogger(Main.class);
+    // private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
+        SpringApplication.run(Main.class, args);
+        /*
         CargoPackageRepository packageRepository = new CargoPackageRepository();
 
         try {
@@ -25,5 +24,7 @@ public class Main {
 
         ConsoleListener consoleListener = new ConsoleListener(packageRepository);
         consoleListener.listen();
+
+         */
     }
 }
